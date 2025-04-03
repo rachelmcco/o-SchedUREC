@@ -1,1 +1,3 @@
 -r requirements/local.txt
+django-environ
+django-environ
