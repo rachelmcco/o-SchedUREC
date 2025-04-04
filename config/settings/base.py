@@ -7,8 +7,8 @@ from pathlib import Path
 import environ
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-# base_347_example/
-APPS_DIR = BASE_DIR / "base_347_example"
+# schedurec/
+APPS_DIR = BASE_DIR / "schedurec"
 env = environ.Env()
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
@@ -94,9 +94,9 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "base_347_example.users",
-    "base_347_example.chat",
-    "base_347_example.urec",  # 👈 add this
+    "schedurec.users",
+    "schedurec.chat",
+    "schedurec.urec",  # 👈 add this
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -105,7 +105,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {"sites": "base_347_example.contrib.sites.migrations"}
+MIGRATION_MODULES = {"sites": "schedurec.contrib.sites.migrations"}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "base_347_example.users.context_processors.allauth_settings",
+                "schedurec.users.context_processors.allauth_settings",
             ],
         },
     },
@@ -289,13 +289,13 @@ ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_VERIFICATION = "none"  # bc allauth?
 # https://docs.allauth.org/en/latest/account/configuration.html
-ACCOUNT_ADAPTER = "base_347_example.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "schedurec.users.adapters.AccountAdapter"
 # https://docs.allauth.org/en/latest/account/forms.html
-ACCOUNT_FORMS = {"signup": "base_347_example.users.forms.UserSignupForm"}
+ACCOUNT_FORMS = {"signup": "schedurec.users.forms.UserSignupForm"}
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
-SOCIALACCOUNT_ADAPTER = "base_347_example.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "schedurec.users.adapters.SocialAccountAdapter"
 # https://docs.allauth.org/en/latest/socialaccount/configuration.html
-SOCIALACCOUNT_FORMS = {"signup": "base_347_example.users.forms.UserSocialSignupForm"}
+SOCIALACCOUNT_FORMS = {"signup": "schedurec.users.forms.UserSocialSignupForm"}
 
 # https://docs.allauth.org/en/dev/socialaccount/configuration.html store the tokens so we can refresh if we need to
 SOCIALACCOUNT_STORE_TOKENS = True

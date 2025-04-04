@@ -24,7 +24,7 @@ cookie cutter for 347
         ```
     2. Dr. Stewart doesn't like `venv`s living in the repos, so his are all elsewhere (e.g. `~/dev/venv-all`)
         ```bash
-        python -m venv ~/dev/venv-all/base_347_example
+        python -m venv ~/dev/venv-all/schedurec
         ```
 2. activate your `venv` (don't forget, this varies depending on your OS and shell)
 3. if you are running the cookiecutter generator yourself, you may want to do the following (_both of which are already done in the current repo_):
@@ -88,7 +88,7 @@ For convenience, you can keep your normal user logged in on Chrome and your supe
 
 Running type checks with mypy:
 
-    $ mypy base_347_example
+    $ mypy schedurec
 
 ### Test coverage
 

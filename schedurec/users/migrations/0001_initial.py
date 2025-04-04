@@ -4,7 +4,7 @@ import django.utils.timezone
 from django.db import migrations
 from django.db import models
 
-import base_347_example.users.models
+import schedurec.users.models
 
 
 class Migration(migrations.Migration):

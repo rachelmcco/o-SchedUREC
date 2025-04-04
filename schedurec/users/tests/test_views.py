@@ -12,12 +12,12 @@ from django.test import RequestFactory
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from base_347_example.users.forms import UserAdminChangeForm
-from base_347_example.users.models import User
-from base_347_example.users.tests.factories import UserFactory
-from base_347_example.users.views import UserRedirectView
-from base_347_example.users.views import UserUpdateView
-from base_347_example.users.views import user_detail_view
+from schedurec.users.forms import UserAdminChangeForm
+from schedurec.users.models import User
+from schedurec.users.tests.factories import UserFactory
+from schedurec.users.views import UserRedirectView
+from schedurec.users.views import UserUpdateView
+from schedurec.users.views import user_detail_view
 
 pytestmark = pytest.mark.django_db
 

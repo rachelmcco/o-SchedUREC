@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-from base_347_example.urec.models import Class  # adjust to match your import path
+from schedurec.urec.models import Class  # adjust to match your import path
 import time
 
 WEEKDAYS = {

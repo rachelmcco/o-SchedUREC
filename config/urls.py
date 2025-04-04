@@ -8,7 +8,7 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path("", include("base_347_example.urec.urls")),
+    path("", include("schedurec.urec.urls")),
     path(
         "about/",
         TemplateView.as_view(template_name="pages/about.html"),
@@ -17,10 +17,10 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path("users/", include("base_347_example.users.urls", namespace="users")),
+    path("users/", include("schedurec.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    path("chat/", include("base_347_example.chat.urls")),
+    path("chat/", include("schedurec.chat.urls")),
     # ...
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),

@@ -5,7 +5,7 @@ from factory import Faker
 from factory import post_generation
 from factory.django import DjangoModelFactory
 
-from base_347_example.users.models import User
+from schedurec.users.models import User
 
 
 class UserFactory(DjangoModelFactory[User]):

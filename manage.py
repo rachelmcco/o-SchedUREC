@@ -25,8 +25,8 @@ if __name__ == "__main__":
         raise
 
     # This allows easy placement of apps within the interior
-    # base_347_example directory.
+    # schedurec directory.
     current_path = Path(__file__).parent.resolve()
-    sys.path.append(str(current_path / "base_347_example"))
+    sys.path.append(str(current_path / "schedurec"))
 
     execute_from_command_line(sys.argv)

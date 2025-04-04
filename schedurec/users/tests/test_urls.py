@@ -1,7 +1,7 @@
 from django.urls import resolve
 from django.urls import reverse
 
-from base_347_example.users.models import User
+from schedurec.users.models import User
 
 
 def test_detail(user: User):
