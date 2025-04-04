@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}My Classes{% endblock %}
+{% block content %}
+<h2>Your Saved Classes</h2>
+
+{% for c in saved_classes %}
+  <div class="card mb-3 p-3">
+    <strong>{{ c.urec_class.name }}</strong><br>
+    {{ c.urec_class.date|date:"l, F j, Y" }}<br>
+    {{ c.urec_class.time }} | {{ c.urec_class.location }}<br>
+    <small class="text-danger">Register by: {{ c.urec_class.registration_deadline|date:"F j, Y, g:i a" }}</small><br>
+
+    <form method="post" action="{% url 'urec:remove_class' c.urec_class.id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-sm btn-danger mt-2">Remove</button>
+    </form>
+    <a href="{% url 'urec:download_ics' c.urec_class.id %}" class="btn btn-sm btn-secondary mt-2">
+        Add to Apple Calendar
+      </a>
+      
+  </div>
+{% empty %}
+  <p>You haven't saved any classes yet.</p>
+{% endfor %}
+{% endblock %}

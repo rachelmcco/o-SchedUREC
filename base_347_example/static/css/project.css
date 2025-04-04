@@ -11,3 +11,22 @@
   background-color: #f2dede;
   border-color: #eed3d7;
 }
+
+
+.text-jmu-purple {
+  color: #450084;
+}
+
+.border-jmu-purple {
+  border-left: 6px solid #450084;
+}
+
+.btn-success {
+  background-color: #00703c;
+  border-color: #00703c;
+}
+
+.btn-success:hover {
+  background-color: #005f33;
+  border-color: #005f33;
+}

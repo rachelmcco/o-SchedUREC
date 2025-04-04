@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Available Classes{% endblock %}
+{% block content %}
+<h2>Available UREC Classes</h2>
+
+{% for c in classes %}
+  <div class="card mb-3 p-3">
+    <strong>{{ c.name }}</strong><br>
+    {{ c.date|date:"l, F j, Y" }}<br>
+    {{ c.time }} | {{ c.location }}<br>
+    <small class="text-danger">Register by: {{ c.registration_deadline|date:"F j, Y, g:i a" }}</small><br>
+
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'urec:save_class' c.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm btn-primary mt-2">Add to My Classes</button>
+      </form>
+    {% endif %}
+  </div>
+{% empty %}
+  <p>No classes available right now.</p>
+{% endfor %}
+{% endblock %}
