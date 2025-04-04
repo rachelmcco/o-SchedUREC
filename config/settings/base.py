@@ -48,11 +48,12 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db(
-        "DATABASE_URL",
-        default="postgres:///base_347_example",
-    ),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # for testing channels as in the end of the tutorial https://channels.readthedocs.io/en/latest/tutorial/part_4.html
 DATABASES["default"]["TEST"] = {"NAME": BASE_DIR / "db.sqlite3"}
@@ -94,9 +95,10 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "base_347_example.users",
-    # Your stuff: custom apps go here
     "base_347_example.chat",
+    "base_347_example.urec",  # 👈 add this
 ]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
