@@ -76,15 +76,24 @@ class Command(BaseCommand):
                     class_start_datetime = datetime.strptime(f"{class_date.date()} {start_time}", "%Y-%m-%d %I:%M %p")
                     deadline = class_start_datetime - timedelta(hours=48)
 
-                    Class.objects.create(
+                    # Check for duplicate before inserting
+                    exists = Class.objects.filter(
                         name=name,
                         time=time_range,
                         location=location,
-                        registration_deadline=deadline,
-                        date=class_date.date(),
-                    )
+                        date=class_date.date()
+                    ).exists()
 
-            self.stdout.write(self.style.SUCCESS(f"✅ Loaded {len(all_rows)} classes from all pages."))
+                    if not exists:
+                        Class.objects.create(
+                            name=name,
+                            time=time_range,
+                            location=location,
+                            registration_deadline=deadline,
+                            date=class_date.date(),
+                        )
+
+            self.stdout.write(self.style.SUCCESS(f"✅ Loaded {len(Class.objects.all())} unique classes from UREC."))
 
         finally:
             driver.quit()

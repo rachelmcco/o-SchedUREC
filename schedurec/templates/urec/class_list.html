@@ -4,14 +4,17 @@
 {% block content %}
 <h2 class="mb-4">Available UREC Classes</h2>
 
-<form method="get" class="mb-4">
-  <label for="day" class="form-label fw-semibold">Filter by day:</label>
-  <select name="day" id="day" onchange="this.form.submit()" class="form-select w-auto d-inline-block ms-2">
+<form method="get" class="mb-4 d-flex gap-3 align-items-center flex-wrap">
+  <input type="text" name="q" value="{{ search_query }}" placeholder="Search by class name..." class="form-control w-50" />
+
+  <select name="day" onchange="this.form.submit()" class="form-select w-auto">
     <option value="">All Days</option>
-    {% for day_option in weekdays %}
+    {% for day_option in day_options %}
       <option value="{{ day_option }}" {% if selected_day == day_option %}selected{% endif %}>{{ day_option }}</option>
     {% endfor %}
   </select>
+
+  <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
 {% if grouped_classes %}
@@ -20,8 +23,9 @@
       <details class="mb-3">
         <summary class="fs-5 fw-bold">{{ day }}</summary>
         {% for c in classes %}
-          <div class="card mt-2 p-3">
+          <div class="card mt-2 p-3 shadow-sm">
             <strong>{{ c.name }}</strong><br />
+            <span class="text-muted">{{ c.date|date:"l, F j, Y" }}</span><br />
             {{ c.time }} | {{ c.location }}<br />
             <small class="text-danger">Register by: {{ c.registration_deadline|date:"F j, Y, g:i a" }}</small><br />
 

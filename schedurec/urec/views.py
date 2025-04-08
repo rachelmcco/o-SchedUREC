@@ -16,25 +16,33 @@ def group_classes_by_weekday(classes):
 
 
 # 🏠 Homepage: Show all available classes organized by weekday
+from django.db.models import Q
+
 def class_list(request):
-    selected_day = request.GET.get("day")
-    all_classes = Class.objects.all()
+    search_query = request.GET.get("q", "")
+    selected_day = request.GET.get("day", "")
+    day_options = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    classes = Class.objects.all()
+
+    if search_query:
+        classes = classes.filter(name__icontains=search_query)
 
     if selected_day:
-        all_classes = all_classes.filter(date__week_day=(["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].index(selected_day) + 2))
+        classes = [cls for cls in classes if cls.date.strftime("%A") == selected_day]
 
-    # Group by weekday name
-    grouped = {}
-    for c in all_classes:
-        weekday = c.date.strftime("%A")
-        grouped.setdefault(weekday, []).append(c)
+    # Group classes by weekday
+    grouped_classes = {}
+    for cls in classes:
+        weekday = cls.date.strftime("%A")
+        grouped_classes.setdefault(weekday, []).append(cls)
 
-    context = {
-        "grouped_classes": grouped,
+    return render(request, "urec/class_list.html", {
+        "grouped_classes": grouped_classes,
+        "search_query": search_query,
         "selected_day": selected_day,
-        "weekdays": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    }
-    return render(request, "urec/class_list.html", context)
+        "day_options": day_options,
+    })
 
 
 
