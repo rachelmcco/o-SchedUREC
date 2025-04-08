@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
-from schedurec.urec.models import Class  # adjust to match your import path
+from schedurec.urec.models import Class
 import time
 
 WEEKDAYS = {
@@ -32,19 +32,32 @@ class Command(BaseCommand):
             driver.get("https://www.jmu.edu/recreation/activities/group-exercise/index.shtml")
             time.sleep(5)
 
-            soup = BeautifulSoup(driver.page_source, "html.parser")
-            table = soup.find("table", {"id": "DataTables_Table_0"})
-
-            if not table:
-                self.stderr.write("❌ Could not find class table.")
-                return
-
-            rows = table.find("tbody").find_all("tr")
-            Class.objects.all().delete()
-
+            all_rows = []
             today = datetime.today()
 
-            for row in rows:
+            while True:
+                soup = BeautifulSoup(driver.page_source, "html.parser")
+                table = soup.find("table", {"id": "DataTables_Table_0"})
+                if not table:
+                    self.stderr.write("❌ Could not find class table.")
+                    break
+
+                rows = table.find("tbody").find_all("tr")
+                all_rows.extend(rows)
+
+                # Try to find and click the "Next" button unless it's disabled
+                try:
+                    next_button = driver.find_element("id", "DataTables_Table_0_next")
+                    if "disabled" in next_button.get_attribute("class"):
+                        break
+                    next_button.click()
+                    time.sleep(2)
+                except Exception:
+                    break  # No more pages or failed to find the button
+
+            Class.objects.all().delete()
+
+            for row in all_rows:
                 cols = row.find_all("td")
                 if len(cols) >= 5:
                     weekday_str = cols[0].text.strip()
@@ -54,7 +67,6 @@ class Command(BaseCommand):
                     location = cols[4].text.strip()
                     time_range = f"{start_time} - {end_time}"
 
-                    # Calculate next occurrence of the weekday
                     class_weekday = WEEKDAYS.get(weekday_str)
                     if class_weekday is None:
                         continue
@@ -62,8 +74,6 @@ class Command(BaseCommand):
                     days_ahead = (class_weekday - today.weekday() + 7) % 7
                     class_date = today + timedelta(days=days_ahead)
                     class_start_datetime = datetime.strptime(f"{class_date.date()} {start_time}", "%Y-%m-%d %I:%M %p")
-
-                    # 48 hours before the class
                     deadline = class_start_datetime - timedelta(hours=48)
 
                     Class.objects.create(
@@ -74,6 +84,7 @@ class Command(BaseCommand):
                         date=class_date.date(),
                     )
 
-            self.stdout.write(self.style.SUCCESS(f"✅ Loaded {len(rows)} classes from UREC."))
+            self.stdout.write(self.style.SUCCESS(f"✅ Loaded {len(all_rows)} classes from all pages."))
+
         finally:
             driver.quit()

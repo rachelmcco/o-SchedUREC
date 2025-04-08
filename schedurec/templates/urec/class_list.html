@@ -1,23 +1,42 @@
 {% extends "base.html" %}
 {% block title %}Available Classes{% endblock %}
+
 {% block content %}
-<h2>Available UREC Classes</h2>
+<h2 class="mb-4">Available UREC Classes</h2>
 
-{% for c in classes %}
-  <div class="card mb-3 p-3">
-    <strong>{{ c.name }}</strong><br>
-    {{ c.date|date:"l, F j, Y" }}<br>
-    {{ c.time }} | {{ c.location }}<br>
-    <small class="text-danger">Register by: {{ c.registration_deadline|date:"F j, Y, g:i a" }}</small><br>
+<form method="get" class="mb-4">
+  <label for="day" class="form-label fw-semibold">Filter by day:</label>
+  <select name="day" id="day" onchange="this.form.submit()" class="form-select w-auto d-inline-block ms-2">
+    <option value="">All Days</option>
+    {% for day_option in weekdays %}
+      <option value="{{ day_option }}" {% if selected_day == day_option %}selected{% endif %}>{{ day_option }}</option>
+    {% endfor %}
+  </select>
+</form>
 
-    {% if user.is_authenticated %}
-      <form method="post" action="{% url 'urec:save_class' c.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-sm btn-primary mt-2">Add to My Classes</button>
-      </form>
+{% if grouped_classes %}
+  {% for day, classes in grouped_classes.items %}
+    {% if classes %}
+      <details class="mb-3">
+        <summary class="fs-5 fw-bold">{{ day }}</summary>
+        {% for c in classes %}
+          <div class="card mt-2 p-3">
+            <strong>{{ c.name }}</strong><br />
+            {{ c.time }} | {{ c.location }}<br />
+            <small class="text-danger">Register by: {{ c.registration_deadline|date:"F j, Y, g:i a" }}</small><br />
+
+            {% if user.is_authenticated %}
+              <form method="post" action="{% url 'urec:save_class' c.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-primary mt-2">Add to My Classes</button>
+              </form>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </details>
     {% endif %}
-  </div>
-{% empty %}
+  {% endfor %}
+{% else %}
   <p>No classes available right now.</p>
-{% endfor %}
+{% endif %}
 {% endblock %}

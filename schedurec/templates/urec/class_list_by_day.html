@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}UREC Classes{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">UREC Classes by Day</h2>
+
+<div class="accordion" id="classAccordion">
+  {% for day, classes in classes_by_day.items %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading-{{ forloop.counter }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse-{{ forloop.counter }}">
+          {{ day }}
+        </button>
+      </h2>
+      <div id="collapse-{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ forloop.counter }}" data-bs-parent="#classAccordion">
+        <div class="accordion-body">
+          {% for c in classes %}
+            <div class="card p-3 mb-2">
+              <strong>{{ c.name }}</strong><br>
+              {{ c.time }} | {{ c.location }}<br>
+              <small class="text-danger">Register by: {{ c.registration_deadline|date:"F j, Y, g:i a" }}</small><br>
+            </div>
+          {% empty %}
+            <p>No classes available.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
