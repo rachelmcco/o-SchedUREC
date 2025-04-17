@@ -12,6 +12,14 @@ from .base import INSTALLED_APPS
 from .base import REDIS_URL
 from .base import env
 
+from pathlib import Path
+import environ
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env()
+env.read_env(str(BASE_DIR / ".env"))  # looks for a .env file at project root
+
+
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
