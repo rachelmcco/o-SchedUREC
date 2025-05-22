@@ -1,6 +1,7 @@
 # 🏋️‍♀️ SchedUREC
 
 SchedUREC is a full-stack Django web application that helps James Madison University (JMU) students browse UREC group exercise classes, save their favorites, and add them to their calendar. Designed for a smooth user experience with a clean, JMU-themed interface.
+avaauble here schedurec-5cx38.ondigitalocean.app and at https://schedurec.me/
 
 ---
 
