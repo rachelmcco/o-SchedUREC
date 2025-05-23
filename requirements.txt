@@ -92,7 +92,7 @@ pyasn1_modules==0.4.2
 pycparser==2.22
 Pygments==2.19.1
 PyJWT==2.10.1
-pyOpenSSL==25.0.0
+pyOpenSSL==25.1.0
 PySocks==1.7.1
 pytest==8.3.4
 pytest-django==4.9.0
