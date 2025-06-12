@@ -45,7 +45,7 @@ docutils==0.21.2
 EditorConfig==0.17.0
 executing==2.2.0
 factory_boy==3.3.1
-Faker==37.1.0
+Faker==37.4.0
 fido2==1.2.0
 filelock==3.18.0
 gunicorn==23.0.0
